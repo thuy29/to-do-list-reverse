@@ -33,7 +33,7 @@ services:
       dockerfile: Dockerfile
       args:
         REACT_APP_API_URL: http://localhost:3001
-    image: thuuuuyyy/backend:latest
+    image: thuuuuyyy/frontend:latest
     container_name: frontend
     restart: always
     ports:
