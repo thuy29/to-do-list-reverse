@@ -43,8 +43,10 @@ jobs:
         uses: devmasx/merge-branch@v1.4.0
         with:
           type: merge
-          branch: main
+          from_branch: dev
+          target_branch: main
           github_token: ${{ secrets.GITHUB_TOKEN }}
+
 
 
   main-workflow:
