@@ -20,15 +20,24 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Clean npm cache
+        run: npm cache clean --force
+
+
       - name: Dependencies install for backend
         run: |
           cd backend
           npm install
 
-      - name: Fix permissions for backend
+      - name: Fix Permissions
         run: |
           cd backend
-          chmod -R 755 .
+          chmod -R 755 node_modules
+
+      - name: Run Backend Unit Tests
+        run: |
+          cd backend
+          npx jest
 
       - name: Tests for backend
         run: |
