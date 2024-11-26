@@ -23,7 +23,6 @@ jobs:
       - name: Clean npm cache
         run: npm cache clean --force
 
-
       - name: Dependencies install for backend
         run: |
           cd backend
@@ -32,12 +31,12 @@ jobs:
       - name: Fix Permissions
         run: |
           cd backend
-          chmod -R 755 node_modules
+          chmod +x ./node_modules/.bin/jest
 
       - name: Run Backend Unit Tests
         run: |
           cd backend
-          npx jest
+          node ./node_modules/.bin/jest
 
       - name: Tests for backend
         run: |
