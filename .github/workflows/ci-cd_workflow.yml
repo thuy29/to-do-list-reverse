@@ -39,16 +39,12 @@ jobs:
           cd frontend
           npm test
 
-      - name: Merge dev into staging
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git fetch origin
-          git checkout staging
-          git merge dev --no-ff --commit
-          git push origin staging
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Merge dev into main
+        uses: devmasx/merge-branch@v1
+        with:
+          type: merge
+          branch: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
   main-workflow:
     if: github.ref == 'refs/heads/main'
