@@ -23,7 +23,6 @@ jobs:
           cd backend
           npm install
 
-
       - name: Tests for backend
         run: |
           cd backend
@@ -49,7 +48,6 @@ jobs:
           git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 
   main-workflow:
     if: github.ref == 'refs/heads/main'
@@ -92,7 +90,6 @@ jobs:
 
       - name: Verify Docker compose
         run: docker-compose --version
-
 
       - name: (Build/ Push) Docker image
         run: |
