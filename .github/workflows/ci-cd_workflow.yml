@@ -6,6 +6,9 @@ on:
       - dev
       - main
 
+permissions:
+  contents: write
+
 jobs:
   dev-workflow:
     if: github.ref == 'refs/heads/dev'
