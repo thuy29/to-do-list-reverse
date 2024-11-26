@@ -37,11 +37,15 @@ jobs:
           npm test
 
       - name: Merge dev into staging
-        uses: devmasx/merge-branch@v1
-        with:
-          type: merge
-          branch: staging
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin
+          git checkout staging
+          git merge dev --no-ff --commit
+          git push origin staging
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   main-workflow:
     if: github.ref == 'refs/heads/main'
@@ -76,7 +80,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-  
+
       - name: Install Docker compose
         run: |
           sudo apt-get update
@@ -85,7 +89,8 @@ jobs:
       - name: Verify Docker compose
         run: docker-compose --version
 
-      - name: (Build/Push) Docker image
+
+      - name: (Build/ Push) Docker image
         run: |
           docker-compose build
           docker-compose push
