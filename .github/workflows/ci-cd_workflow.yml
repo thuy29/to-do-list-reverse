@@ -38,11 +38,11 @@ jobs:
           cd frontend
           npm test
 
-      - name: Merge dev into main
-        uses: devmasx/merge-branch@v1.0.0
+      - name: Merge Dev into Main
+        if: success()
+        uses: devmasx/merge-branch@v1.6.0
         with:
-          type: merge
-          branch: main
+          target_branch: main
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
 
