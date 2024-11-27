@@ -47,6 +47,18 @@ jobs:
           target_branch: main
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Trigger Push Event on Main
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout main
+          git commit --allow-empty -m "Trigger push event after merge"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   main-workflow:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
