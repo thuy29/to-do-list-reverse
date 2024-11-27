@@ -40,11 +40,12 @@ jobs:
 
       - name: Merge Dev into Main
         if: success()
-        uses: devmasx/merge-branch@v1.6.0
+        uses: devmasx/merge-branch@master
         with:
+          type: now
+          from_branch: dev
           target_branch: main
           github_token: ${{ secrets.GITHUB_TOKEN }}
-
 
   main-workflow:
     if: github.ref == 'refs/heads/main'
