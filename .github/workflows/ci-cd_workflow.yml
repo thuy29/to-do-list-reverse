@@ -47,17 +47,22 @@ jobs:
           target_branch: main
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Trigger Push Event on Main
+      - name: Sync Main Branch (Trigger Push)
         if: success()
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git fetch origin main
-          git checkout main
-          git commit --allow-empty -m "Trigger push event after merge"
-          git push origin main
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+            await octokit.repos.merge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              base: 'main',
+              head: 'main',
+            });
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
 
   main-workflow:
     if: github.ref == 'refs/heads/main'
