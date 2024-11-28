@@ -37,6 +37,17 @@ jobs:
           cd frontend
           npm test
 
+      - name: Start application using Docker Compose
+        run: |
+          docker-compose up -d
+
+      - name: Wait for application to be ready
+        run: |
+          sleep 10
+
+      - name: Verify application is running
+        run: |
+          curl --fail http://localhost:3000/ || exit 1
 
       - name: Install dependencies for E2E tests
         run: |
@@ -47,6 +58,11 @@ jobs:
         run: |
           cd e2e-tests
           npm test
+
+      - name: Stop application
+        run: |
+          docker-compose down
+
 
 
       - name: Login to Docker
